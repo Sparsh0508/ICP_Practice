@@ -4,9 +4,9 @@ class Solution {
         int ans = 0;
         int n = prices.length;
 
-        for (int i = 0; i < n; i++) {          
-            for (int j = i + 1; j < n; j++) {  
-                int profit = prices[j] - prices[i];
+        for(int i = 0; i < n; i++) {          
+            for(int j = i + 1; j < n; j++) {  
+                int profit = prices[j] -prices[i];
                 ans = Math.max(ans, profit);
             }
         }
