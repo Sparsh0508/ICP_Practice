@@ -1,0 +1,47 @@
+in this Question we asked for number of complete component
+Approach(dfs)
+1)First we convert 2d array to arrayList so that we can easily traverse on thst array
+2) now we take three variables count ,count of vertices,count of edges
+3)now we traverse on graph using dfs and find the count of v and e
+4)Bcz we nknow the formulas to find the complete graph is [ (v*(v-1)) == e ]
+5)if this forula proof we increase the count and at last we return count
+
+class Solution {
+    int v,e;
+    public int countCompleteComponents(int n, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int edge[] : edges){
+            int u = edge[0];
+            int v = edge[1];
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+        int c = 0;
+        boolean[] vis = new boolean[n];
+        for(int i= 0;i<n;i++){
+             v = 0;
+             e = 0;
+            if(!vis[i]){
+                dfs(adj,vis,i);
+                if(v*(v-1)== e){
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+    public void dfs(ArrayList<ArrayList<Integer>> adj,boolean[] vis,int node){
+        vis[node] = true;
+        e+= adj.get(node).size();
+        v++;
+        for(int nei : adj.get(node)){
+            if(!vis[nei]){
+                dfs(adj,vis,nei);
+            }
+        }
+    }
+}
