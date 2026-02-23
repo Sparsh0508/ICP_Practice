@@ -1,0 +1,68 @@
+In this Question we implement question no. 1971. Find if Path Exists in Graph
+
+int his we have to find if its possible to traverse from source to destination.
+
+a)BFS Approach
+  1) we traverse in the graph using src node using bfs
+  2) we make a base case (src == dest) we return true
+  3) else we traverse on all neighbours of that node 
+  4)if we didnot found any case we return false;
+
+b) DFS Approach
+  1) we traverse in the graph using src node using bfs
+  2) if at any point we find src == dest we return true
+  3) if not found we return false
+
+class Solution {
+    public boolean validPath(int n, int[][] edges, int src, int dest) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for(int i = 0;i<n;i++){
+            graph.add(new ArrayList<>());
+        }    
+        for(int[] i : edges){
+            graph.get(i[0]).add(i[1]);
+            graph.get(i[1]).add(i[0]);
+        }
+        // return bfs(graph,src,dest);
+
+        boolean[] vis = new boolean[graph.size()];
+        return dfs(graph,src,dest,vis);
+    }
+
+
+    public static boolean bfs(List<List<Integer>> graph,int src,int dest){
+        boolean[] visit = new boolean[graph.size()];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        visit[src] = true;
+        while(!q.isEmpty()){
+            int node = q.poll();
+            if(node == dest){
+                return true;
+            }
+            for(int i : graph.get(node)){
+                if(!visit[i]){
+                    q.add(i);
+                    visit[i] = true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public static boolean dfs(List<List<Integer>> graph,int src,int dest,boolean[] vis){
+        if(src == dest){
+            return true;
+        }
+        vis[src] = true;
+        for(int nei : graph.get(src)){
+            if(!vis[nei]){
+                if(dfs(graph,nei,dest,vis)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}   
